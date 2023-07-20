@@ -155,6 +155,7 @@ export default function IndexPage() {
           </nav>
         )}
       </div>
+      
       <Modal
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
