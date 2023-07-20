@@ -38,7 +38,7 @@ export default function BookingInfoPage() {
 
   return (
     <div className="container mx-auto px-4">
-      <Header onSearch={handleSearch} />
+      <Header onSearch={handleSearch}/>
 
       {bookingInfo.length === 0 && (
         <div className="flex justify-center mt-8">

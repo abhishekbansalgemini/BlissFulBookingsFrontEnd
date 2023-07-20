@@ -90,22 +90,18 @@ export default function AccountPage() {
       const makeAdmin = await axios.put("/changeUserToAdmin", {
         id: user._id,
       });
-      
+
       setUser(makeAdmin.data);
-      
     } catch (err) {}
-    
   }
 
   async function deleteUser() {
     try {
       logout();
       await axios.delete("/deleteUser/" + user._id);
-      
     } catch (err) {
       console.log(err);
     }
-
   }
 
   if (!ready) return <Loader></Loader>;
@@ -141,7 +137,7 @@ export default function AccountPage() {
                 onClick={() => {
                   setShowDeleteModal(true);
                   setModalMessage("Are you sure you want to be an admin?");
-                  setModalHeading("Confirm Admin")
+                  setModalHeading("Confirm Admin");
                 }}
               >
                 <svg
@@ -187,7 +183,7 @@ export default function AccountPage() {
               onClick={() => {
                 setShowDeleteModal(true);
                 setModalMessage("Are you sure you want to logout?");
-                setModalHeading("Confirm logout")
+                setModalHeading("Confirm logout");
               }}
               className="text-gray-700 hover:text-gray-600 bg-transparent"
             >
@@ -212,7 +208,7 @@ export default function AccountPage() {
                 setModalMessage(
                   "Are you sure you want to delete your account?"
                 );
-                setModalHeading("Confirm deletion")
+                setModalHeading("Confirm deletion");
               }}
               className="text-red-500 hover:text-green-700 bg-transparent"
             >
@@ -236,28 +232,21 @@ export default function AccountPage() {
           <button className="mr-2" onClick={() => setShowDeleteModal(false)}>
             Cancel
           </button>
-          {
-            modalMessage === "Are you sure you want to delete your account?" && (
-              <button className="text-red-500" onClick={deleteUser}>
-            Confirm
-          </button>
-            )
-          }
-          {
-            modalMessage === "Are you sure you want to logout?" && (
-              <button className="text-red-500" onClick={logout}>
-            Confirm
-          </button>
-            )
-          }
-          {
-            modalMessage === "Are you sure you want to be an admin?" && (
-              <button className="text-red-500" onClick={makeUserAsAdmin}>
-            Confirm
-          </button>
-            )
-          }
-
+          {modalMessage === "Are you sure you want to delete your account?" && (
+            <button className="text-red-500" onClick={deleteUser}>
+              Confirm
+            </button>
+          )}
+          {modalMessage === "Are you sure you want to logout?" && (
+            <button className="text-red-500" onClick={logout}>
+              Confirm
+            </button>
+          )}
+          {modalMessage === "Are you sure you want to be an admin?" && (
+            <button className="text-red-500" onClick={makeUserAsAdmin}>
+              Confirm
+            </button>
+          )}
         </div>
       </Modal>
       <Modal

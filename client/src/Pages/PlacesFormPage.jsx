@@ -132,6 +132,7 @@ export default function PlacesFormPage() {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            placeholder="description"
             required
           ></textarea>
 
@@ -144,6 +145,8 @@ export default function PlacesFormPage() {
           <textarea
             value={extraInfo}
             onChange={(e) => setExtraInfo(e.target.value)}
+            placeholder="extra info"
+            required
           ></textarea>
 
           {preInput(

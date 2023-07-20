@@ -14,6 +14,8 @@ import { UserContextProvider } from "./Context/UserContext";
 import "./App.css";
 import BookingInfoPage from "./Pages/BookingInfoPage";
 import AllUsers from "./Pages/AllUsers";
+import ForgotPassword from "./Pages/ForgotPassword";
+import ResetPassword from "./Pages/ResetPassword";
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -26,6 +28,14 @@ function App() {
           <Route path="/login" element={<LoginPage></LoginPage>}>
             {" "}
           </Route>
+          <Route
+            path="/login/forgotPassword"
+            element={<ForgotPassword></ForgotPassword>}
+          ></Route>
+          <Route
+            path="/login/forgotPassword/resetPassword"
+            element={<ResetPassword></ResetPassword>}
+          ></Route>
           <Route
             path="/register"
             element={<RegisterPage></RegisterPage>}

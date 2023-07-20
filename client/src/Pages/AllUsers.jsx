@@ -11,6 +11,7 @@ import {
 } from "../Components/ValidationsUtils/validationUtils";
 
 export default function AllUsers() {
+  const [searchValue, setSearchValue] = useState("");
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -81,10 +82,13 @@ export default function AllUsers() {
       closeModal();
     }
   }
+  function handleSearch(value) {
+    setSearchValue(value);
+  }
 
   return (
     <>
-      <Header />
+      <Header onSearch={handleSearch} />
       <AccountNav />
 
       <div className="flex justify-center items-center h-full">

@@ -3,14 +3,15 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../Components/Header/Header";
 import {
   validateEmail,
   validatePassword,
   validateName,
 } from "../Components/ValidationsUtils/validationUtils";
-import Header from "../Components/Header/Header";
 
 export default function RegisterPage() {
+  const [searchValue, setSearchValue] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,13 +64,17 @@ export default function RegisterPage() {
     }
   }
 
+  function handleSearch(value) {
+    setSearchValue(value);
+  }
+
   if (redirect) {
     return <Navigate to={"/login"} />;
   }
 
   return (
     <>
-      <Header></Header>
+      <Header onSearch={handleSearch}></Header>
       <div className="flex items-center justify-center h-[88vh]">
         <div className="w-full max-w-md p-4 bg-gray-100 shadow-lg rounded">
           <h1 className="mb-4 text-3xl font-bold text-center">Register</h1>
@@ -101,14 +106,14 @@ export default function RegisterPage() {
               />
             </div>
             <div className="relative">
-            <label htmlFor="email" className="text-gray-700">
+              <label htmlFor="email" className="text-gray-700">
                 Password
               </label>
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
-                className="w-full px-4 py-2 rounded focus:outline-none focus:ring focus:ring-purple-500"
-                placeholder="Password"
+                className="w-full px-4 py-2 rounded focus:outline-none focus:border-blue-500"
+                placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -155,6 +160,7 @@ export default function RegisterPage() {
                 )}
               </button>
             </div>
+
             <button className="w-full py-2 text-white bg-primary rounded focus:outline-none">
               Register
             </button>

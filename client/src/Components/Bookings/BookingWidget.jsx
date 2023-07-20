@@ -189,7 +189,7 @@ export default function BookingWidget({ place }) {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              <label>phone Number:</label>
+              <label>Phone Number:</label>
               <input
                 type="tel"
                 value={phone}
