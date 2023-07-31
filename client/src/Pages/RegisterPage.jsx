@@ -17,36 +17,79 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [uppercasePresent, setUppercasePresent] = useState(false);
+  const [numericPresent, setNumericPresent] = useState(false);
+  const [specialCharPresent, setSpecialCharPresent] = useState(false);
+  const [smallcasePresent, setSmallcasePresent] = useState(false);
+  const [minPasswordLength, setMinPasswordLength] = useState(false);
+
+  const handelNameInput = (event) => {
+    setName(event.target.value);
+    setNameError("");
+    if (event.target.value.trim() === "") {
+      setNameError("Name is required");
+      return false;
+    } else if (!validateName(event.target.value)) {
+      setNameError("Please enter a valid name with only alphabets.");
+      return false;
+    }
+    return true;
+  };
+
+  const handelEmailInput = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
+    if (event.target.value.trim() === "") {
+      setEmailError("Please enter your email id");
+      return false;
+    } else if (!validateEmail(event.target.value)) {
+      setEmailError("Please enter a valid email address.");
+      return false;
+    }
+    return true;
+  };
+
+  function checkPasswordCriteria(password) {
+    setUppercasePresent(/[A-Z]/.test(password));
+    setNumericPresent(/\d/.test(password));
+    setSpecialCharPresent(/[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/.test(password));
+    setSmallcasePresent(/[a-z]/.test(password));
+    setMinPasswordLength(password.length >= 8);
+
+    if (
+      uppercasePresent &&
+      numericPresent &&
+      specialCharPresent &&
+      smallcasePresent &&
+      minPasswordLength
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const handelPasswordInput = (event) => {
+    const res = checkPasswordCriteria(event.target.value);
+    setPassword(event.target.value);
+    return res;
+  };
 
   async function registerUser(event) {
     event.preventDefault();
-
-    if (name.trim() === "") {
-      toast("Name is required");
-      return;
-    } else if (!validateName(name)) {
-      toast("Please enter a valid name with only alphabets.");
-      return;
-    }
-
-    if (email.trim() === "") {
-      toast("Please enter your email id");
-      return;
-    } else if (!validateEmail(email)) {
-      toast("Please enter a valid email address.");
+    if (
+      !(
+        nameError === "" &&
+        emailError === "" &&
+        checkPasswordCriteria(password)
+      )
+    ) {
+      toast("Please Fill The Details According to the Mentioned Format");
       return;
     }
-
-    if (password.trim() === "") {
-      toast("Please enter your password");
-      return;
-    } else if (!validatePassword(password)) {
-      toast(
-        "Please enter a valid password with at least 8 characters, including at least one uppercase letter, one numeric value, and one special character."
-      );
-      return;
-    }
-
     try {
       await axios.post("/register", {
         name,
@@ -86,11 +129,14 @@ export default function RegisterPage() {
               <input
                 type="text"
                 id="name"
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500"
+                className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                  nameError ? "border-red-500" : "focus:border-blue-500"
+                }`}
                 placeholder="name"
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                onChange={handelNameInput}
               />
+              {nameError && <p className="text-red-500 text-sm">{nameError}</p>}
             </div>
             <div>
               <label htmlFor="email" className="text-gray-700">
@@ -99,11 +145,16 @@ export default function RegisterPage() {
               <input
                 type="email"
                 id="email"
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500"
+                className={`w-full px-4 py-2 border rounded focus:outline-none ${
+                  emailError ? "border-red-500" : "focus:border-blue-500"
+                }`}
                 placeholder="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={handelEmailInput}
               />
+              {emailError && (
+                <p className="text-red-500 text-sm">{emailError}</p>
+              )}
             </div>
             <div className="relative">
               <label htmlFor="email" className="text-gray-700">
@@ -112,11 +163,44 @@ export default function RegisterPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
-                className="w-full px-4 py-2 rounded focus:outline-none focus:border-blue-500"
+                className={`w-full px-4 py-2 rounded focus:outline-none ${
+                  passwordError
+                    ? "border border-red-500"
+                    : "focus:border-blue-500"
+                }`}
                 placeholder="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handelPasswordInput}
               />
+              <ul className="list-disc ml-6">
+                {!uppercasePresent && (
+                  <li className=" text-sm">
+                    Contain at least 1 uppercase character
+                  </li>
+                )}
+
+                {!numericPresent && (
+                  <li className=" text-sm">Contain at least 1 numeric value</li>
+                )}
+
+                {!specialCharPresent && (
+                  <li className=" text-sm">
+                    Contain at least one special character
+                  </li>
+                )}
+                {!smallcasePresent && (
+                  <li className=" text-sm">
+                    Contain any number of lowercase characters
+                  </li>
+                )}
+
+                {!minPasswordLength && (
+                  <li className=" text-sm">
+                    Minimum password length should be 8
+                  </li>
+                )}
+              </ul>
+
               <button
                 type="button"
                 className="absolute top-10 right-3 text-gray-400"

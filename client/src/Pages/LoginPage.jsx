@@ -14,7 +14,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const { setUser } = useContext(UserContext);
-  const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const login = async (event) => {
@@ -33,28 +32,6 @@ export default function LoginPage() {
     }
   };
 
-  const updatePassword = async () => {
-    if (newPassword.trim() === "") {
-      toast("Please enter your new password");
-      return;
-    } else if (!validatePassword(newPassword)) {
-      toast(
-        "Please enter a valid password with at least 8 characters, including at least one uppercase letter, one numeric value, and one special character."
-      );
-      return;
-    }
-    try {
-      const userInfo = await axios.put("/login", {
-        email,
-        newPassword,
-      });
-      setUser(userInfo.data);
-      toast("Login Successful");
-      setRedirect(true);
-    } catch (err) {
-      toast("Not a valid user");
-    }
-  };
 
   if (redirect) {
     return <Navigate to="/" />;

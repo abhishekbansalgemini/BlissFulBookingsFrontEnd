@@ -202,18 +202,20 @@ export default function AccountPage() {
                 />
               </svg>
             </button>
-            <button
-              onClick={() => {
-                setShowDeleteModal(true);
-                setModalMessage(
-                  "Are you sure you want to delete your account?"
-                );
-                setModalHeading("Confirm deletion");
-              }}
-              className="text-red-500 hover:text-green-700 bg-transparent"
-            >
-              <UserX></UserX>
-            </button>
+            {!user.isSuperAdmin && (
+              <button
+                onClick={() => {
+                  setShowDeleteModal(true);
+                  setModalMessage(
+                    "Are you sure you want to delete your account?"
+                  );
+                  setModalHeading("Confirm deletion");
+                }}
+                className="text-red-500 hover:text-green-700 bg-transparent"
+              >
+                <UserX></UserX>
+              </button>
+            )}
           </div>
         </div>
       )}
