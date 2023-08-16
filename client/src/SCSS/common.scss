@@ -1,0 +1,25 @@
+$primary-color: #4299e1;
+$secondary-color: #e53e3e;
+$background-color: #edf2f7;
+$border-radius: 0.5rem;
+$gap: 1rem;
+
+@mixin button-styling {
+  background-color: $primary-color;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+@mixin modal-styling {
+  width: 16rem;
+  background-color: white;
+  border-radius: $border-radius;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

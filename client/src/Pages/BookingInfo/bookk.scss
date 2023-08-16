@@ -1,0 +1,57 @@
+@import "../../SCSS/common";
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.no-bookings {
+  @extend .container;
+  text-align: center;
+  background-color: $background-color;
+  padding: 1rem;
+  border-radius: $border-radius;
+  margin-top: 2rem;
+}
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  gap: $gap;
+  margin-top: 2rem;
+}
+
+.booking-card {
+  @extend .container;
+  background-color: $background-color;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+
+  .booking-details {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .booking-details-title {
+    font-weight: bold;
+  }
+}
+
+.booking-cancel-button {
+  button {
+    @include button-styling;
+  }
+}

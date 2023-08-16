@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import IndexPage from "./Pages/IndexPage";
+import IndexPage from "./Pages/IndexPage/IndexPage";
 import LoginPage from "./Pages/LoginPage.jsx";
 import Layout from "./Components/Layout/Layout";
 import RegisterPage from "./Pages/RegisterPage";
@@ -12,11 +12,12 @@ import BookingsPage from "./Pages/BookingsPage";
 import BookingPage from "./Pages/BookingPage";
 import { UserContextProvider } from "./Context/UserContext";
 import "./App.css";
-import BookingInfoPage from "./Pages/BookingInfoPage";
+import BookingInfoPage from "./Pages/BookingInfo/BookingInfoPage";
 import AllUsers from "./Pages/AllUsers";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
 import Footer from "./Components/Footer/Footer";
+import Protected from "./Components/Protected/Protected";
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -46,7 +47,10 @@ function App() {
             path="/account/places"
             element={<PlacesPage></PlacesPage>}
           ></Route>
-          <Route path="/account/users" element={<AllUsers></AllUsers>}></Route>
+          <Route
+            path="/account/users"
+            element={<Protected Component={AllUsers}></Protected>}
+          ></Route>
           <Route
             path="/account/places/new"
             element={<PlacesFormPage />}
@@ -63,7 +67,6 @@ function App() {
           <Route path="/account/bookings" element={<BookingsPage />}></Route>
           <Route path="/account/bookings/:id" element={<BookingPage />}></Route>
         </Route>
-        
       </Routes>
       <Footer></Footer>
     </UserContextProvider>
