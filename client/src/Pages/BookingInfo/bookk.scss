@@ -1,0 +1,71 @@
+$primary-color: #4299e1;
+$secondary-color: #e53e3e;
+$background-color: #edf2f7;
+$border-radius: 0.5rem;
+$gap: 1rem;
+
+@mixin button-styling {
+  background-color: $primary-color;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.no-bookings {
+  text-align: center;
+  background-color: $background-color;
+  padding: 1rem;
+  border-radius: $border-radius;
+  margin-top: 2rem;
+}
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $gap;
+  margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.booking-card {
+  background-color: $background-color;
+  border-radius: $border-radius;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+
+  .booking-details {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .booking-details-title {
+    font-weight: bold;
+  }
+}
+
+.booking-cancel-button {
+  button {
+    @include button-styling;
+  }
+}

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Header from "../Components/Header/Header";
-import Loader from "../Components/Loader/Loader";
+import Header from "../../Components/Header/Header";
+import Loader from "../../Components/Loader/Loader";
 import Modal from "react-modal";
 import { useLocation } from "react-router-dom";
+import "./index.css"; // Import the SCSS stylesheet for the page
 
 export default function IndexPage() {
   const [places, setPlaces] = useState([]);
@@ -96,55 +97,55 @@ export default function IndexPage() {
   return (
     <>
       <Header onSearch={handleSearch} isFilterIconClick={isFilterIconClicked} />
-      <div className="mt-8 gap-x-6 gap-y-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="place-grid">
         {loading ? (
-          <div className="flex items-center justify-center h-64">
+          <div className="place-loader">
             <Loader />
           </div>
         ) : currentPlaces.length > 0 ? (
           currentPlaces.map((place) => (
-            <Link to={"/place/" + place._id} key={place._id}>
-              <div className="bg-gray-500 mb-2 rounded-2xl flex">
+            <Link to={"/place/" + place._id} key={place._id} className="place-link">
+              <div className="place-card">
                 {place.photos?.[0] && (
                   <img
-                    className="rounded-2xl object-cover aspect-square"
+                    className="place-image"
                     src={"http://localhost:4000/uploads/" + place.photos?.[0]}
                     alt=""
                   />
                 )}
               </div>
-              <h2 className="font-bold">{place.address}</h2>
-              <h3 className="text-sm text-gray-500 truncate">{place.title}</h3>
-              <div className="mt-1">
-                <span className="font-bold">₹{place.price} per night</span>
+              <h2 className="place-title">{place.address}</h2>
+              <h3 className="place-subtitle">{place.title}</h3>
+              <div className="place-price">
+                <span className="place-price-text">₹{place.price} per night</span>
               </div>
             </Link>
           ))
         ) : (
-          <div className="grid place-items-center w-[90vw]">
-        <div className="text-center bg-gray-200 p-4 rounded-lg">
-          <h2 className="text-2xl mb-4">No Places found</h2>
-          <p className="text-gray-500">Can't find places of the given price.</p>
-        </div>
-      </div>
+          <div className="place-not-found">
+            <div className="place-not-found-box">
+              <h2 className="place-not-found-title">No Places found</h2>
+              <p className="place-not-found-text">Can't find places of the given price.</p>
+            </div>
+          </div>
         )}
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-4">
+      <div className="place-pagination">
         {filteredPlaces.length > itemsPerPage && (
           <nav className="pagination">
-            <ul className="flex space-x-2">
+            <ul className="pagination-list">
               {Array.from({
                 length: Math.ceil(filteredPlaces.length / itemsPerPage),
               }).map((_, index) => (
-                <li key={index}>
+                <li key={index} className="pagination-item">
                   <button
                     className={`${
                       index + 1 === currentPage
-                        ? "text-white bg-blue-500"
-                        : "text-blue-500 bg-white"
-                    } px-3 py-1 rounded-md`}
+                        ? "pagination-button-active"
+                        : "pagination-button"
+                    }`}
                     onClick={() => paginate(index + 1)}
                   >
                     {index + 1}
@@ -160,53 +161,53 @@ export default function IndexPage() {
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         ariaHideApp={false}
-        className="w-64 mx-auto bg-white rounded-lg p-4 shadow-md"
+        className="modal-box"
         overlayClassName="modal-overlay"
       >
-        <h2 className="text-xl font-bold mb-4 text-center">Filter By Price</h2>
-        <div className="mb-2">
+        <h2 className="modal-title">Filter By Price</h2>
+        <div className="modal-item">
           <input
             type="checkbox"
             name="range1"
             checked={priceFilters.range1}
             onChange={handlePriceFilterChange}
-            className="form-checkbox mr-2"
+            className="modal-checkbox"
           />
-          <label>₹0 - ₹999</label>
+          <label className="modal-label">₹0 - ₹999</label>
         </div>
-        <div className="mb-2 flex items-center">
+        <div className="modal-item">
           <input
             type="checkbox"
             name="range2"
             checked={priceFilters.range2}
             onChange={handlePriceFilterChange}
-            className="form-checkbox mr-2"
+            className="modal-checkbox"
           />
-          <label>₹1000 - ₹1999</label>
+          <label className="modal-label">₹1000 - ₹1999</label>
         </div>
-        <div className="mb-2 flex items-center">
+        <div className="modal-item">
           <input
             type="checkbox"
             name="range3"
             checked={priceFilters.range3}
             onChange={handlePriceFilterChange}
-            className="form-checkbox mr-2"
+            className="modal-checkbox"
           />
-          <label>₹2000 - ₹2999</label>
+          <label className="modal-label">₹2000 - ₹2999</label>
         </div>
-        <div className="flex items-center">
+        <div className="modal-item">
           <input
             type="checkbox"
             name="range4"
             checked={priceFilters.range4}
             onChange={handlePriceFilterChange}
-            className="form-checkbox mr-2"
+            className="modal-checkbox"
           />
-          <label>₹3000 and above</label>
+          <label className="modal-label">₹3000 and above</label>
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="modal-button">
           <button
-            className="px-4 py-2 rounded-lg hover:text-red-700"
+            className="modal-btn"
             onClick={() => setShowModal(false)}
           >
             Cancel
